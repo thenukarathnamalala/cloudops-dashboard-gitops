@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: thenu8175/cloudops-dashboard-frontend:65931e9d65858c5a4e099f30b6c1594b8742cce5
+          image: thenu8175/cloudops-dashboard-frontend:57e7b62a177ecea939941cc3d9912c8be0db2226
           ports:
             - containerPort: 80
           resources:
