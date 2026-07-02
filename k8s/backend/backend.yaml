@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudops-backend
+  namespace: cloudops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudops-backend
+  template:
+    metadata:
+      labels:
+        app: cloudops-backend
+    spec:
+      containers:
+        - name: backend
+          image: thenu8175/cloudops-dashboard-backend:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DATABASE_URL
+              value: postgresql://cloudops:cloudops@postgres:5432/cloudops_db
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudops-backend
+  namespace: cloudops
+spec:
+  type: ClusterIP
+  selector:
+    app: cloudops-backend
+  ports:
+    - port: 5000
+      targetPort: 5000
