@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: thenu8175/cloudops-dashboard-backend:47b4b41
+          image: thenu8175/cloudops-dashboard-backend:65931e9d65858c5a4e099f30b6c1594b8742cce5
           ports:
             - containerPort: 5000
           env:
