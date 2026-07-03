@@ -19,15 +19,18 @@ spec:
           ports:
             - containerPort: 5000
           env:
-            - name: DATABASE_URL
-              value: postgresql://cloudops:cloudops@postgres:5432/cloudops_db
-          resources:
-            requests:
-              memory: "256Mi"
-              cpu: "100m"
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
+            - name: PROMETHEUS_URL
+              value: http://monitoring-kube-prometheus-prometheus.monitoring:9090
+
+           - name: DATABASE_URL
+             value: postgresql://cloudops:cloudops@postgres:5432/cloudops_db
+                  resources:
+                     requests:
+                       memory: "256Mi"
+                       cpu: "100m"
+                   limits:
+                     memory: "512Mi"
+                     cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
