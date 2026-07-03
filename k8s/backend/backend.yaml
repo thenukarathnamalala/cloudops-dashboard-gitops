@@ -3,44 +3,56 @@ kind: Deployment
 metadata:
   name: cloudops-backend
   namespace: cloudops
+
 spec:
   replicas: 1
+
   selector:
     matchLabels:
       app: cloudops-backend
+
   template:
     metadata:
       labels:
         app: cloudops-backend
+
     spec:
       containers:
         - name: backend
           image: thenu8175/cloudops-dashboard-backend:def48e005353bb3a47c40e360ae857dc9d874557
+
           ports:
             - containerPort: 5000
+
           env:
             - name: PROMETHEUS_URL
               value: http://monitoring-kube-prometheus-prometheus.monitoring:9090
 
-           - name: DATABASE_URL
-             value: postgresql://cloudops:cloudops@postgres:5432/cloudops_db
-                  resources:
-                     requests:
-                       memory: "256Mi"
-                       cpu: "100m"
-                   limits:
-                     memory: "512Mi"
-                     cpu: "500m"
+            - name: DATABASE_URL
+              value: postgresql://cloudops:cloudops@postgres:5432/cloudops_db
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: cloudops-backend
   namespace: cloudops
+
 spec:
   type: ClusterIP
+
   selector:
     app: cloudops-backend
+
   ports:
     - port: 5000
       targetPort: 5000
